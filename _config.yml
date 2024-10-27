@@ -113,7 +113,7 @@ author:
   location         : "Mexico"
   email            :
   links:
-    - label: "Email"
+    - label: "GitHub"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:your.name@email.com"
     - label: "Website"
