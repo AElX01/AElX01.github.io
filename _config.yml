@@ -114,8 +114,8 @@ author:
   email            :
   links:
     - label: "GitHub"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:your.name@email.com"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/AElX01"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
