@@ -1,3 +1,10 @@
+---
+layout: single
+title: "Mr. Robot Write-up"
+header:
+  caption: "caption"
+---
+
 # Mr Robot CTF
 ---
 
