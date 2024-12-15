@@ -10,6 +10,10 @@ search: false
   
 // Custom styles to override post title color and remove underline on the main page
 .archive__item-title a {
-    color: black !important;
-    text-decoration: none !important;
+    color: black;
+    text-decoration: none;
+  }
+  
+  .archive__item-title a:hover {
+    text-decoration: underline;
   }
