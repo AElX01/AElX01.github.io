@@ -22,7 +22,7 @@ title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "0xNcat"
 description              : "pentesting, cybersecurity forensics, networking and sysadmin"
-url                      : "https://aelx01.github.io/"
+url                      : "https://aelx01.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "AElX01/AElX01.github.io"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
