@@ -7,15 +7,4 @@ search: false
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
-
-/* Remove underlines and adjust link color globally */
-a {
-    text-decoration: none; /* Removes the underline */
-    color: #000000; /* Changes the link color to black */
-  }
-  
-  a:hover {
-    text-decoration: underline; /* Optional: Adds underline on hover */
-    color: #555555; /* Optional: Changes color on hover */
-  }
   
