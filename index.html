@@ -4,3 +4,7 @@ author_profile: true
 excerpt: "0xNcat - pentesting, cybersecurity forensics, networking and sysadmin"
 title: Home
 ---
+
+{% for post in paginator.posts %}
+  <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+{% endfor %}
