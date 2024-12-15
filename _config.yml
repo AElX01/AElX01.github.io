@@ -115,7 +115,7 @@ analytics:
 author:
   name             : "0xNcat"
   avatar           : "images/hashtopolis.png"
-  bio              : "cybersecurity write-ups!"
+  bio              : "cybersecurity engineering student who likes pentesting and forensics!"
   location         : "Mexico"
   email            :
   links:
@@ -321,6 +321,7 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments: true
       share: true
       related: true
+
