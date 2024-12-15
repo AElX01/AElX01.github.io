@@ -114,7 +114,7 @@ analytics:
 # Site Author
 author:
   name             : "0xNcat"
-  avatar           : "images/hashtopolis.png"
+  avatar           : "hashtopolis.png"
   bio              : "cybersecurity engineering student who likes pentesting and forensics!"
   location         : "Mexico"
   email            :
