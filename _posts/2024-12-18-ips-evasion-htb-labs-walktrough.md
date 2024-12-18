@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Firewall and IDS/IPS Evasion Labs
-excerpt: ""
+excerpt: "These labs aim to be a practical scenario on how to use network tools such as **nmap** and **netcat** perform a network enumeration without being too noisy"
 header:
   overlay_image: images/nmap.jpg
 ---
