@@ -1,6 +1,7 @@
 ---
 layout: single
-title: "Firewall and IDS/IPS Evasion Labs"
+title: Firewall and IDS/IPS Evasion Labs
+excerpt: ""
 header:
   overlay_image: images/nmap.jpg
 ---
