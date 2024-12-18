@@ -1,11 +1,10 @@
 ---
 layout: single
-title: "Firewall and IDS/IPS Evasion HTB Labs Walktrough"
+title: "Firewall and IDS/IPS Evasion Labs"
 header:
   overlay_image: images/nmap.jpg
 ---
 
-# Walktrough
 
 These labs aim to be a practical scenario on how to use network tools such as **nmap** and **netcat** perform a network enumeration without being too noisy. In these labs, the following nmap flags are **mandatory** if you want your scan to be as quite as possible (and also faster):
 
