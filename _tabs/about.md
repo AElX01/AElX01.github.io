@@ -1,6 +1,6 @@
 ---
 # the default layout is 'page'
-title: 0xncat@localhost:~$ whoami
+title: unixcat@localhost:~$ whoami
 icon: fas fa-info-circle
 order: 4
 ---
