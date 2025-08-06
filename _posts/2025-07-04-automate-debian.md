@@ -2,7 +2,7 @@
 title: Automating the Installation of Debian with a Preseed File
 description: A walkthrough about how to write a preseed file to automate the installation of a Debian system
 date: 2025-07-04 00:32:20 -0600 
-categories: [LINUX, AUTOMATION]
+categories: [AUTOMATION, LINUX]
 tags: [linux, automation]
 image:
   path: /assets/used/debian.jpg
