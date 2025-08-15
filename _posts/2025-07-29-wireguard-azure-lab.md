@@ -1,11 +1,11 @@
 ---
-title: How to use Terraform and Ansible to Deploy a WireGuard VPN Server on Azure
+title: Use Terraform and Ansible to Deploy a WireGuard VPN Server on Azure
 description: Learn how to use IaC to deploy and manage your own vpn server 
 date: 2025-07-29 00:32:20 -0600 
 categories: [AUTOMATION, CLOUD]
 tags: [cloud, automation, azure]
 image:
-  path: /assets/used/min.png
+  path: /assets/used/wireguard.jpg
 ---
 
 # Introduction
@@ -28,7 +28,7 @@ To complete this tutorial you require:
 
 # Organizing the Environment
 
-Start by creating two directories to separate the Ansible and Terraform scripts To avoid installing Ansible directly in your machine, I recommend that you create a Python virtual environment and install Ansible there.
+Start by creating two directories to separate the Ansible and Terraform scripts To avoid installing Ansible directly in your machine, I recommend that you create a Python virtual environment and install Ansible there. I will use a directory named **az_keys** to store the ssh keys of the VPN server.
 
 ```bash
 lab/wireguard-iac/ansible took 5s 
@@ -38,14 +38,15 @@ lab/wireguard-iac/ansible took 5s
 By completing the above steps you will end up with a directory structure similar to this one:
 
 ```bash
-Documents/lab/wireguard-iac 
-❯ tree -C -d -L 2
+wsl@ideapad:~/projects/wireguard_deployment$ tree -C -d -L 2
 .
 ├── ansible
-│   └── ansible-wireguard
+│   ├── ansible-python
+│   └── wireguard_cfg
 └── terraform
+    └── az_keys
 
-4 directories
+6 directories
 ```
 
 # Working with Terraform
@@ -60,7 +61,7 @@ wireguard-iac/terraform on  main [✘!?] via 💠 wireguard_project
 main.tf  outputs.tf  variables.tf
 ```
 
-Declare the Azure provider in the **main.tf** file. As I will be executing every run using the Terraform cloud, I included then the *cloud* block. I **DO NOT** recommend that you use terraform cloud for this project as you will encounter multiple issues and limitations.
+Declare the Azure provider in the **main.tf** file.
 
 ```hcl
 terraform {
@@ -68,13 +69,6 @@ terraform {
         azurerm = {
             source = "hashicorp/azurerm"
             version = "4.30.0"
-        }
-    }
-
-    cloud {
-        organization = "homelabs"
-        workspaces {
-            name = "wireguard_project"
         }
     }
 }
@@ -295,6 +289,7 @@ variable "vm_version" {
 variable "admin_ssh_key" {
     description = "public SSH key"
     type = string
+    default = "./az_keys/id_ed25519.pub"
 }
 ```
 
@@ -311,7 +306,7 @@ resource "azurerm_linux_virtual_machine" "tf_wireguard_server" {
 
     admin_ssh_key {
         username = var.admin_username
-        public_key = var.admin_ssh_key
+        public_key = file(var.admin_ssh_key)
     }
 
     os_disk {
@@ -328,6 +323,18 @@ resource "azurerm_linux_virtual_machine" "tf_wireguard_server" {
 }
 ```
 
+### Declaring the inventory file
+
+We can create the **inventory.ini** file using Terraform with the **local-exec** provisioner:
+
+```hcl
+resource "null_resource" "tf_inventory_file" {
+  provisioner "local-exec" {
+        command = "echo '[wireguard]\n${azurerm_public_ip.tf_wireguard_ip.ip_address}' > ./../ansible/inventory.ini"
+  }
+}
+```
+
 ### Output Variables
 
 As I used Terraform Cloud for this project, I will not be able to automate the creation of the **inventory.ini** file and run the playbook using Terraform. I declared an output for Terraform to display the server's ip once it has been created:
@@ -340,21 +347,7 @@ output "wireguard_server_ip" {
 
 ## Building the Infrastructure
 
-Run the `terraform apply` command and put the server's ip in an **inventory.ini** file in the **ansible** directory:
-
-```bash
-Outputs:
-wireguard_server_ip = "4.246.84.60"
-```
-
-In the inventory file:
-
-```ini
-[wireguard]
-4.246.84.60
-```
-
-Verify the infrastructure has been created using either `terraform state list` or `az resource list`. The simpliest way is to go to the Azure web CLI and check:
+Verify the infrastructure has been created once you run `terraform apply`, using either `terraform state list` or `az resource list`. The simpliest way is to go to the Azure web CLI and check:
 
 ![alt text](/assets/used/image.png)
 
@@ -438,7 +431,7 @@ Use the following **ansible.cfg** file for Ansible to contemplate information su
 ```ini
 [defaults]
 inventory = inventory.ini
-private_key_file = $HOME/.ssh/azure_keys/id_ed25519
+private_key_file = $HOME/projects/wireguard_deployment/terraform/az_keys/id_ed25519
 host_key_checking = False
 remote_user = adminuser
 ```
@@ -538,6 +531,7 @@ I will use a Windows PC as a Wireguard client, the configuration file should be 
 ```ini
 [Interface]
 PrivateKey = gI6EdUSYvn8ugXOt8QQD6Yc+JyiZxIhp3GInSWRfWGE=
+Address = 10.0.1.2/32
 DNS = 1.1.1.1, 1.0.0.1
 
 [Peer]
@@ -558,4 +552,4 @@ In the peer, go to the [dnsleaks](https://dnsleaktest.com/) site and verify that
 
 # Conclusion
 
-In this tutorial, you learned how to deploy a WireGuard server in Azure using Terraform and learned how to use Ansible to configure it, creating a cheap, easy to deploy, and secure alternative for commercial VPNs.
+In this tutorial, you learned how to deploy a WireGuard server in Azure using Terraform and learned how to use Ansible to configure it, creating a cheap, easy to deploy, and secure alternative to commercial VPNs.
